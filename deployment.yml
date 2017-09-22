@@ -1,0 +1,22 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: hello-world-js-1
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels: # labels to select/identify the deployment
+        app: hello-world
+    spec:     # pod spec                  
+      containers: 
+      - name: hello-world
+        image: gcr.io/metal-map-159912/hello-world-js-1:latest # image we pushed
+        ports:
+        - containerPort: 3000
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
